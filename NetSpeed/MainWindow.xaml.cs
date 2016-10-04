@@ -198,6 +198,8 @@ namespace NetSpeed
             System.Timers.Timer t = new System.Timers.Timer(1000);
             t.Elapsed += new ElapsedEventHandler(run);
             t.Enabled = true;
+            //TextBlockUpText("8888.88 kbps");
+            //TextBlockDownText("88888.88 kbps");
         }
 
         private bool FlagMenuItemLockMoveIsChecked = false;
