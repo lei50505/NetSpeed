@@ -149,6 +149,8 @@ namespace NetSpeed
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
 
+            this.ResizeMode = ResizeMode.NoResize;
+
             string ConfigMenuItemLockMoveIsCheckedValue = UConfig.get(ConfigMenuItemLockMoveIsCheckedKey);
             if (ConfigMenuItemLockMoveIsCheckedValue == null)
             {
