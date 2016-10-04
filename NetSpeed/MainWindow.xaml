@@ -1,0 +1,26 @@
+﻿<Window x:Class="NetSpeed.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="56.554" Width="105.69" ShowInTaskbar="False" Background="{x:Null}" AllowsTransparency="True" WindowStyle="None" Icon="resource/main.ico" MouseDown="Window_MouseDown" Loaded="Window_Loaded" >
+    <Window.ContextMenu>
+        <ContextMenu>
+            <MenuItem x:Name="MenuItemLockMove"  Header="锁定移动" Click="MenuItemLockMove_Click"  ></MenuItem>
+            <MenuItem x:Name="MenuItemTopMost"  Header="置顶" Click="MenuItemTopMost_Click" ></MenuItem>
+            <MenuItem x:Name="MenuItemExit"  Header="退出" Click="MenuItemExit_Click" ></MenuItem>
+        </ContextMenu>
+    </Window.ContextMenu>
+
+    <Grid>
+
+        <Border CornerRadius="5"  Background="Black"   Opacity="0.5"/>
+        
+
+        <Grid>
+
+            <TextBlock x:Name="TextBlockDown" HorizontalAlignment="Left" Margin="10,10,0,0"  VerticalAlignment="Top" FontWeight="Bold" TextAlignment="Right" Width="86" Foreground="White"/>
+
+            <TextBlock x:Name="TextBlockUp" HorizontalAlignment="Left" Margin="10,32,0,0"  VerticalAlignment="Top" FontWeight="Bold" TextAlignment="Right" Width="86" Foreground="White"/>
+
+        </Grid>
+    </Grid>
+</Window>
