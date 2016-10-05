@@ -4,7 +4,7 @@
         Title="MainWindow" Height="45" Width="102" ShowInTaskbar="False" Background="{x:Null}" AllowsTransparency="True" WindowStyle="None" Icon="resource/main.ico" MouseDown="Window_MouseDown" Loaded="Window_Loaded" >
     <Window.ContextMenu>
         <ContextMenu>
-            <MenuItem x:Name="MenuItemLockMove"  Header="锁定移动" Click="MenuItemLockMove_Click"  ></MenuItem>
+            <MenuItem x:Name="MenuItemLockMove"  Header="锁定位置" Click="MenuItemLockMove_Click"  ></MenuItem>
             <MenuItem x:Name="MenuItemTopMost"  Header="置顶" Click="MenuItemTopMost_Click" ></MenuItem>
             <MenuItem x:Name="MenuItemExit"  Header="退出" Click="MenuItemExit_Click" ></MenuItem>
         </ContextMenu>
