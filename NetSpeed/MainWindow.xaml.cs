@@ -52,11 +52,33 @@ namespace NetSpeed
             }
         }
 
+        private delegate void SetPositionGate(double left,double top);
+        private void SetPosition(double left, double top)
+        {
+            if (TextBlockDown.Dispatcher.Thread != Thread.CurrentThread)
+            {
+                SetPositionGate sg = new SetPositionGate(SetPosition);
+                Dispatcher.Invoke(sg, new object[] { left, top });
+            }
+            else
+            {
+                Left = left;
+                Top = top;
+            }
+        }
+
         List<PerformanceCounter> downCounters = new List<PerformanceCounter>();
         List<PerformanceCounter> upCounters = new List<PerformanceCounter>();
 
         private string ConfigWindowLeftKey = "ConfigWindowLeft";
         private string ConfigWindowTopKey = "ConfigWindowTop";
+
+        public double screenWidth = 0;
+        public double screenHeight = 0;
+        string ConfigWindowLeftValue = null;
+        string ConfigWindowTopValue = null;
+
+ 
         public MainWindow()
         {
             InitializeComponent();
@@ -70,19 +92,21 @@ namespace NetSpeed
             }
 
             //设置初始位置
-            string ConfigWindowLeftValue = UConfig.get(ConfigWindowLeftKey);
-            string ConfigWindowTopValue = UConfig.get(ConfigWindowTopKey);
+            ConfigWindowLeftValue = UConfig.get(ConfigWindowLeftKey);
+            ConfigWindowTopValue = UConfig.get(ConfigWindowTopKey);
 
             if (ConfigWindowLeftValue == null || ConfigWindowTopValue == null)
             {
-                double screenWidth = SystemParameters.PrimaryScreenWidth;
-                double screenHeight = SystemParameters.PrimaryScreenHeight;
+                screenWidth = SystemParameters.PrimaryScreenWidth;
+                screenHeight = SystemParameters.PrimaryScreenHeight;
 
                 Left = screenWidth - 150;
                 Top = screenHeight - 130;
             }
             else
             {
+                screenWidth = Convert.ToDouble(ConfigWindowLeftValue);
+                screenHeight = Convert.ToDouble(ConfigWindowTopValue);
                 Left = Convert.ToDouble(ConfigWindowLeftValue);
                 Top = Convert.ToDouble(ConfigWindowTopValue);
             }
@@ -100,6 +124,22 @@ namespace NetSpeed
         double upSpeed = 0;
         private void run(object source, ElapsedEventArgs e)
         {
+            string ConfigWindowLeftValue = UConfig.get(ConfigWindowLeftKey);
+            string ConfigWindowTopValue = UConfig.get(ConfigWindowTopKey);
+
+            if (ConfigWindowLeftValue == null || ConfigWindowTopValue == null)
+            {
+
+            }
+            else
+            {
+                if (isDrag == false)
+                {
+                    SetPosition(screenWidth, screenHeight);
+                }
+            }
+
+
             curDown = 0;
             curUp = 0;
             foreach (PerformanceCounter downCounter in downCounters)
@@ -122,21 +162,28 @@ namespace NetSpeed
             oldDown = curDown;
             oldUp = curUp;
         }
-
+        public bool isDrag = false;
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (FlagMenuItemLockMoveIsChecked == true)
             {
                 return;
             }
+            isDrag = true;
             if (e.LeftButton == MouseButtonState.Pressed)
             {
                 DragMove();
             }
+
             double currentWindowLeft = this.Left;
             double currentWindowTop = this.Top;
+            screenWidth = currentWindowLeft;
+            screenHeight = currentWindowTop;
+            ConfigWindowLeftValue = currentWindowLeft.ToString();
+            ConfigWindowTopValue = currentWindowTop.ToString();
             UConfig.add(ConfigWindowLeftKey, currentWindowLeft.ToString());
             UConfig.add(ConfigWindowTopKey, currentWindowTop.ToString());
+            isDrag = false;
         }
 
 
